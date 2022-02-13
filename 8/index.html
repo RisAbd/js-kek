@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+<body>
+
+  <script type="text/javascript">
+    const arr = [14,179,-123,10,0,0.5,89,100,99.99,99.999,99.999999999999,-56,10];
+
+    // using loop
+    const indexes = [];
+    for (let i = 0; i < arr.length; i++) {
+      if ((arr[i] <= -10 && arr[i] > -100) || (arr[i] < 100 && arr[i] >= 10)) {
+        indexes.push(i);
+      }
+    }
+    console.log(indexes);
+
+    // map+filter (academic)
+    const academic = arr.map(function (n, i) {
+      return {number: n, index: i}
+    }).filter(function (a) {
+      return (a.number <= -10 && a.number > -100) || (a.number < 100 && a.number >= 10);
+    }).map(function (a) {
+      return a.index;
+    });
+    console.log(academic);
+
+    // map+filter
+    const mf = arr.map(function (n, i) {
+      if ((n <= -10 && n > -100) || (n < 100 && n >= 10)) {
+        return i;
+      }
+    }).filter(function (n) {
+      return n !== undefined;
+    });
+    console.log(mf);
+
+  </script>
+
+</body>
+</html>
