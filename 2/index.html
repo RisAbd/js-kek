@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cars List</title>
+  <style type="text/css">
+    table td, table th {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+
+  <ul id="cars-list"></ul>
+
+  <table id="cars-table">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+
+  <script type="text/javascript">
+
+    const carsListEl = document.getElementById('cars-list');
+    const carsTableEl = document.querySelector('#cars-table');
+
+    const TABLE_HEADERS = {
+      'model': 'Модель',
+      "manufacturer": "Марка",
+      "year": "Год",
+      "engineCapacity": "Объем (л.)",
+      "fuelType": "Топливо",
+      "body": "Кузов",
+      "color": "Цвет",
+      "steering": "Руль",
+      "gearbox": "КПП",
+      "transmission": "Привод",
+    };
+
+    const TRANSLATIONS = {
+      'left': 'левый',
+      'right': 'правый',
+      'manual': "механич.",
+      'auto': "автомат",
+      'diesel': "соляра",
+      'gasoline': "бенза",
+      'minivan': "минивэн",
+      'sedan': "седан",
+      'hatchback': "хетчбэк",
+      'front': "js",
+      'back': "python",
+    };
+
+    function humanizeTableHead(s) {
+      return TABLE_HEADERS[s] || s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    function translate(s) {
+      return TRANSLATIONS[s] || s;
+    }
+
+    console.log(1);
+    fetch('./cars.json').then(function (resp) {
+      console.log(resp);
+      resp.json().then(function (cars) {
+        console.log(cars);
+
+        if (cars.length === 0) {
+          return;
+        }
+
+        const firstCar = cars[0];
+        const keys = Object.keys(firstCar);
+        console.log(keys);
+
+        const tHeadEl = carsTableEl.querySelector('thead');
+        for (let key of keys) {
+          const thEl = document.createElement('th');
+          thEl.innerText = key; //humanizeTableHead(key);
+          tHeadEl.appendChild(thEl);
+        }
+
+        const tBodyEl = carsTableEl.querySelector('tbody');
+        for (let car of cars) {
+          const carEl = document.createElement('tr');
+
+          for (let key of keys) {
+            const tdEl = document.createElement('td');
+            if (key === 'color') {
+              tdEl.style.backgroundColor = car[key];
+            } else if (key === 'engineCapacity') {
+              tdEl.innerText = car[key] ? (car[key]/1000).toFixed(1) : '-';
+            } else {
+              tdEl.innerText = car[key] ? translate(car[key]) : '-';
+            }
+            carEl.appendChild(tdEl);
+          }
+
+          tBodyEl.appendChild(carEl);
+
+        }
+
+      })
+    });
+    console.log(2);
+    async function startCapture(displayMediaOptions) {
+  let captureStream = null;
+
+  try {
+    captureStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+  } catch(err) {
+    console.error("Error: " + err);
+  }
+  return captureStream;
+}
+
+  </script>
+
+</body>
+</html>

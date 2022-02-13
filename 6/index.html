@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+<body>
+
+  <script type="text/javascript">
+
+    const arr = [13, 2, 100, 5];
+    console.log(arr);
+
+    // for (let i = arr.length-1; i >= 0; i--) {
+    //   const elem = arr[i];
+    //   console.log(elem);
+    // }
+
+    let newArray = [];
+
+    for (let i = 0; i < arr.length; i++) {
+      // const elem = arr[i] * 2;
+      newArray.push(arr[i] * 2);
+      // console.log(i+')', newArray);
+    }
+
+    console.log(arr, newArray);
+
+
+    function mapM2(arr) {
+      let arrayMethod = [];
+      for (let i = 0; i < arr.length; i++) {
+        arrayMethod.push(arr[i] * 2);
+      }
+      return arrayMethod;
+    }
+
+
+    console.log();
+    console.log(newArray, '->', mapM2(newArray));
+    console.log([1,2,3], '->', mapM2([1, 2, 3]));
+    console.log([5, 5, 5], '->', mapM2([5, 5, 5]));
+    const m = [100, 2, 13]
+    const mm = mapM2(m);
+    console.log(m, '->', mm);
+
+
+    function map(arr, func) {
+      let arrayMethod = [];
+      for (let i = 0; i < arr.length; i++) {
+        const mappedElem = func(arr[i]);
+        arrayMethod.push(mappedElem);
+      }
+      return arrayMethod;
+    }
+
+    function kek(a) {
+      return a + 1;
+    }
+    console.log();
+    console.log(kek(123));
+    console.log(kek);
+
+
+    function mek(a) {
+      return a * 2;
+    }
+    function xd(a) {
+      return a * a;
+    }
+
+    console.log();
+    console.log(newArray, '->', map(newArray, kek));
+    console.log([1,2,3], '->', map([1, 2, 3], mek));
+    console.log([5, 10, -2], '->', map([5, 10, -2], xd));
+
+
+    const users = [
+      {id: 1, name: 'Abdullah', birthYear: 1993},
+      {id: 2, name: 'Nurkan', birthYear: 1997},
+      {id: 3, name: 'Chyngyz', birthYear: 1996},
+    ];
+
+    console.log();
+
+    console.log(users);
+
+    function getName(user) {
+      return user.name;
+    }
+    const userNames = map(users, getName);
+    console.log(userNames);
+
+    const userIDs = map(users, function (u) {
+      return u.id;
+    });
+
+    console.log(userIDs);
+
+
+    // ...
+
+    console.log();
+
+    const userDoubleName = map(users, function (u) {
+      return u.name + u.name;
+    });
+
+    console.log(userDoubleName);
+
+    // const userDoubleNames = ['AbdullahAbdullah', 'NurkanNurkan', 'ChyngyzChyngyz'];
+
+
+    // ...
+
+    console.log()
+
+    const currentYear = 2022;
+
+    const userAges = map(users, function (u) {
+      return u.name + ' ' + (currentYear - u.birthYear);
+    });
+
+    console.log(userAges);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // function map(arr) {
+    //   const r = [];
+
+    //   for (let i = 0; i < arr.length; i++) {
+    //     const item = arr[i];
+    //     const mapped = item * 2;
+    //     r.push(mapped);
+    //   }
+
+    //   return r;
+    // }
+
+
+    // const m = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    // const res = map(m);  // -> [2, 4, 6, 8, 10, 12, 14, 16, 18]
+
+    // console.log(m);
+    // console.log(res);
+
+
+
+  </script>
+
+</body>
+</html>

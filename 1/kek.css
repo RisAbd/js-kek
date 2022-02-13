@@ -1,0 +1,31 @@
+
+h1 {
+  background-color: red;
+}
+#symbol {
+  font-size: 40px;
+  text-align: center;
+  border: 1px solid black;
+  padding: 10px;
+  display: inline-block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+#symbol {
+  font-size: 50px;
+  background-color: red;
+}
+
+/** {
+  color: yellow;
+}*/
+
+
+button {
+  color: red;
+  background-color: yellow;
+}
+
+.blue {
+  color: blue;
+}

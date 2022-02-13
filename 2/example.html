@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kek Mek</title>
+  <style type="text/css">
+    #users-input {
+      border: 1px solid black;
+      padding: 10px;
+    }
+    #users-input > img[src]:not([src=""]) {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+    }
+
+    #users-list {
+      border: 1px solid black;
+      padding: 10px;
+      padding-left: 20px;
+      list-style: none;
+      list-style-position: outside;
+      font-size: 20px;
+    }
+    #users-list > li > img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      transform: translateY(5px);
+      border: 1px solid black;
+    }
+    #users-list > li {
+      transform: translateY(-5px);
+      padding-bottom: 5px;
+      border-bottom: 1px solid lightgray;
+    }
+    #users-list > li:hover {
+      border: 1px solid black;
+    }
+    #users-list > li > button {
+      float: right;
+      background: none;
+      font-family: Courier, monospace;
+      font-size: 30px;
+      border: none;
+      padding: 5px;
+      width: 50px;
+    }
+    #users-list > li > button:hover {
+      background-color: lightpink;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="users-input">
+    <img src="">
+    <br>
+    <label>First name: <input type="text" name="first-name" value="Abdullah"></label>
+    <br>
+    <label>Last name: <input type="text" name="last-name" value="Ibragimov"></label>
+    <br>
+    <label>Photo: <input type="file" name="photo"></label>
+    <br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <ul id="users-list"></ul>
+
+  <script type="text/javascript">
+    const usersInputForm = document.querySelector('#users-input');
+    const imgEl = usersInputForm.querySelector('img');
+    const usersListEl = document.querySelector('#users-list');
+
+    usersInputForm.onchange = function (e) {
+      if (e.target.name === 'photo') {
+        const selectedFile = e.target.files[0];
+        const imgEl = usersInputForm.querySelector('img');
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imgEl.src = e.target.result;
+        };
+
+        reader.readAsDataURL(selectedFile);
+      }
+    };
+
+    usersInputForm.onsubmit = function (e) {
+
+      const firstNameInput = e.target.querySelector('input[name="first-name"]');
+      const firstName = firstNameInput.value;
+
+      const lastNameInput = e.target.querySelector('input[name="last-name"]');
+      const lastName = lastNameInput.value;
+
+      const photoInput = e.target.querySelector('input[name="photo"]');
+
+      const newUserListItemEl = document.createElement('li');
+      newUserListItemEl.innerHTML = `<img src="${imgEl.src}"><span>${firstName}</span> <span>${lastName}</span><button>X</button>`;
+
+      newUserListItemEl.querySelector('button').onclick = function (e) {
+        usersListEl.removeChild(newUserListItemEl);
+      };
+
+      usersListEl.insertBefore(newUserListItemEl, usersListEl.firstChild);
+
+      firstNameInput.value = '';
+      lastNameInput.value = '';
+      photoInput.value = '';
+      imgEl.src = '';
+
+      firstNameInput.focus();
+
+      return false;
+    };
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+[
+    {
+        "key": 123,
+        "is_admin": false,
+        "name": "Abdullah",
+        "cars": [
+            {
+                "name": "Zafira",
+                "year": 2003,
+                "v": 1995,
+                "body": "minivan",
+                "color": "darkblue"
+            }
+        ],
+        "age": 28,
+        "jena": {
+            "name": "Tahmina Jorobay kyzy",
+            "age": 24
+        },
+        "is_married": true
+    },
+    {
+        "key": 123,
+        "is_admin": false,
+        "name": "Nurkan",
+        "cars": [],
+        "age": 24,
+        "jena": null,
+        "is_married": false
+    }
+]

@@ -1,0 +1,52 @@
+[
+    {
+        "manufacturer": "Opel",
+        "model": "Zafira",
+        "year": 2003,
+        "engineCapacity": 1995,
+        "fuelType": "diesel",
+        "body": "minivan",
+        "color": "darkblue",
+        "steering": "left",
+        "gearbox": "manual",
+        "transmission": "front",
+        "kek": 123,
+        "kolesa": [16, 16, 16, 16, 15]
+    },
+    {
+        "model": "Ваз 2109",
+        "manufacturer": "Лада",
+        "year": 1998,
+        "engineCapacity": 1500,
+        "fuelType": "gasoline",
+        "body": "hatchback",
+        "color": "gray",
+        "steering": "left",
+        "gearbox": "manual",
+        "transmission": "front"
+    },
+    {
+        "model": "E34",
+        "manufacturer": "BMW",
+        "year": 1994,
+        "engineCapacity": 1950,
+        "fuelType": "gasoline",
+        "body": "sedan",
+        "color": "gray",
+        "steering": "left",
+        "gearbox": "manual",
+        "transmission": "back"
+    },
+    {
+        "model": "Ist",
+        "manufacturer": "Toyota",
+        "year": 2005,
+        "engineCapacity": 1300,
+        "fuelType": "gasoline",
+        "body": "hatchback",
+        "color": "gray",
+        "steering": "right",
+        "gearbox": "auto",
+        "transmission": "front"
+    }
+]
