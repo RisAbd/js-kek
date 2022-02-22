@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  <style type="text/css">
+    body{
+      background-image: url("img2.jpg");  
+    }
+    * {
+     
+      z-index: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    #control-panel {
+      
+      padding: 8px;
+      display: flex;
+      justify-content: end;
+    }
+    #control-panel > form.controls {
+      background-color: #DEB887;
+      display: inline-block;
+    }
+    #content {
+      width: 600px;
+    background-color: #DEB887;
+    padding: 5px;
+    margin-inline: auto;
+    }
+
+    #content > .statement {
+      background-color: #f7f7c8;
+      border: 3px solid black;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+    #content > .statement > p {
+      padding: 2px;
+    }
+    #content > .statement > .original {
+      background-color:#f7f7c8;
+      color: #e10707;
+      direction: rtl;
+      font-size: 20px;
+    }
+    #content > .statement > .transcription {
+      background-color: #f7f7c8;
+      color: #38b902;
+      font-family: mono;
+     
+    }
+    #content > .statement > .translation {
+      background-color: #f7f7c8;
+      font-style: italic;
+    }
+
+    #content.no-translation > .statement > .translation,
+    #content.no-transcription > .statement > .transcription,
+    #content.no-original > .statement > .original {
+      display: none;
+    }
+  </style>
+
+</head>
+<body>
+
+  <div id="control-panel">
+    <form id="statement-controls">
+      <input type="checkbox" name="original" checked>
+      <input type="checkbox" name="transcription" checked>
+      <input type="checkbox" name="translation" checked>
+    </form>
+  </div>
+
+  <div id="content" class="">
+    <div class="statement">
+      <p class="original">
+        الله أكبر
+      </p>
+      <p class="transcription">
+        Аллаху Акбар
+      </p>
+      <p class="translation">
+        Аллах улук
+      </p>
+    </div>
+
+    <div class="statement">
+      <p class="original">
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ  <br>
+        الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ<br>
+        الرَّحْمَٰنِ الرَّحِيمِ<br>
+        مَالِكِ يَوْمِ الدِّينِ<br>
+        إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ<br>
+        اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ<br>
+        صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ<br>
+      </p>
+      <p class="transcription">
+        Аузу билляхи минашшайтаани р-Раджим.<br>
+        Бисмилляяhи-р-Рахмаани-р-Рахиим.<br>
+        Альхамду лилляяhи Раббиль гаалямиин.<br>
+        Ар-Рахмаани-р-Рахиим.<br>
+        Маалики яумиддиин.<br>
+        Иййаака нагбуду ва иййаака настагиин.<br>
+        Ихдинассырааталь мустакыйим.<br>
+        Сырааталлязиина ан'амта аляйхим.<br>
+        Гайриль магдууби галяйhим валядааалиин.<br>
+      </p>
+      <p class="translation">
+        Мээримдүү, Ырайымдуу Аллахтын аты менен!<br>
+
+        Ааламдардын эгеси болгон Аллахка мактоо!<br>
+
+        Ал Мээримдүү, Ырайымдуу.<br>
+
+        Кыямат Күндүн падышасы.<br>
+
+        Биз Сага гана сыйынып, Сенден гана жардам сурайбыз.<br>
+
+        Өзүң бизди туура жолго баштагын, (Ал жол) <br>
+        Сенин каарыңа калбагандар жана адашпагандарга<br>
+        Өзүң тартуулаган жол.<br>
+      </p>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+    const statementViewConstrolsForm = document.querySelector('#statement-controls');
+
+    const contentBlock = document.querySelector('#content');
+
+    statementViewConstrolsForm.addEventListener('change', function (e) {
+      if (e.target.name === 'original') {
+        if (e.target.checked) {
+          contentBlock.classList.remove('no-original');
+        } else {
+          contentBlock.classList.add('no-original');
+        }
+      }
+      if (e.target.name === 'transcription') {
+        if (e.target.checked) {
+          contentBlock.classList.remove('no-transcription');
+        } else {
+          contentBlock.classList.add('no-transcription');
+        }
+      }
+      if (e.target.name === 'translation') {
+        if (e.target.checked) {
+          contentBlock.classList.remove('no-translation');
+        } else {
+          contentBlock.classList.add('no-translation');
+        }
+      }
+    })
+
+  </script>
+
+
+</body>
+</html>
