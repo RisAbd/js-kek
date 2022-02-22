@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #control-panel {
+      background-color: yellow;
+      padding: 8px;
+      display: flex;
+      justify-content: end;
+    }
+    #control-panel > form.controls {
+      background-color: green;
+      display: inline-block;
+    }
+    #content {
+      background-color: lightblue;
+      padding: 5px;
+    }
+
+    #content > .statement {
+      border: 3px solid black;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding: 10px;
+    }
+    #content > .statement > p {
+      padding: 2px;
+    }
+    #content > .statement > .original {
+      background-color: pink;
+      direction: rtl;
+      font-size: 20px;
+    }
+    #content > .statement > .original > ol {
+      list-style-position: inside;
+    }
+    #content > .statement > .transcription {
+      background-color: cyan;
+      font-family: mono;
+    }
+    #content > .statement > .translation {
+      background-color: lightgreen;
+      font-style: italic;
+    }
+    #content > .statement > h3 {
+      text-align: center;
+    }
+
+    #content.no-translation > .statement > .translation,
+    #content.no-transcription > .statement > .transcription,
+    #content.no-original > .statement > .original,
+    #content.no-header > .statement > h3 {
+      display: none;
+    }
+
+
+  </style>
+
+</head>
+<body>
+  <div id="control-panel">
+    <form id="statement-controls">
+      <label>h: <input type="checkbox" name="header"></label><br>
+      <label>ar: <input type="checkbox" name="original"></label><br>
+      <label>tr: <input type="checkbox" name="transcription"></label><br>
+      <label>tc: <input type="checkbox" name="translation"></label><br>
+    </form>
+  </div>
+
+  <div id="content" class=""></div>
+
+  <script type="text/javascript">
+    const statementViewConstrolsForm = document.querySelector('#statement-controls');
+    console.log(statementViewConstrolsForm);
+
+    const contentBlock = document.querySelector('#content');
+
+    statementViewConstrolsForm.addEventListener('change', function (e) {
+      if (e.target.checked) {
+        contentBlock.classList.remove('no-'+e.target.name);
+      } else {
+        contentBlock.classList.add('no-'+e.target.name);
+      }
+    });
+
+    fetch('https://kekmek.tk/data.json').then(r => r.json()).then(statements => {
+      console.log('kek', statements);
+
+      for (let i = 0; i < statements.length; i++) {
+        const statement = statements[i];
+
+        const stEl = document.createElement('div');
+        stEl.classList.add('statement');
+
+        const stHead = document.createElement('h3');
+        stHead.innerText = statement.header;
+        stEl.appendChild(stHead);
+
+        const arTextEl = document.createElement('p');
+        arTextEl.classList.add('original');
+        if (statement.original instanceof Array) {
+          const arAyatsListEl = document.createElement('ol');
+          for (let k = 0; k < statement.original.length; k++) {
+            const li = document.createElement('li');
+            li.innerText = statement.original[k];
+            arAyatsListEl.appendChild(li);
+          }
+          arTextEl.appendChild(arAyatsListEl);
+        } else {
+          arTextEl.innerText = statement.original;
+        }
+
+        const tcTextEl = document.createElement('p');
+        tcTextEl.classList.add('transcription');
+        tcTextEl.innerText = statement.transcription;
+
+        const trTextEl = document.createElement('p');
+        trTextEl.classList.add('translation');
+        trTextEl.innerText = statement.translation;
+
+        stEl.appendChild(arTextEl);
+        stEl.appendChild(tcTextEl);
+        stEl.appendChild(trTextEl);
+
+        contentBlock.appendChild(stEl);
+      }
+
+    });
+
+  </script>
+
+
+</body>
+</html>
