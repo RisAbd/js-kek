@@ -3,159 +3,72 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Namaz Order</title>
+  <title></title>
 
   <style type="text/css">
-    @import url('https://fonts.googleapis.com/css?family=Roboto');
-    @import url('https://fonts.googleapis.com/css?family=Roboto Mono');
-    @import url('https://fonts.googleapis.com/css?family=Google Sans Text');
-    @import url('https://fonts.googleapis.com/css?family=Open Sans');
-
     * {
       margin: 0;
       padding: 0;
     }
-    body {
-      font-family: 'Google Sans Text';
-      --content-width: 700px;
-      background-color: rgba(255, 255, 0, 0.05);
-    }
 
-    header {
-      background-color: rgba(0, 255, 255, 0.1);
-      border-bottom: 1px solid black;
-      padding: 8px;
-      /*display: flex;*/
-      justify-content: center;
-    }
     #control-panel {
-      margin: 0 auto;
-      display: block;
+      background-color: yellow;
+      padding: 8px;
       display: flex;
       justify-content: end;
-      max-width: var(--content-width);
     }
-    #statement-controls {
-      /*background-color: green;*/
+    #control-panel > form.controls {
+      background-color: green;
       display: inline-block;
     }
     #content {
-      /*background-color: lightblue;*/
-      padding: 10px;
-      max-width: var(--content-width);
-      margin: 0 auto;
+      background-color: lightblue;
+      padding: 5px;
     }
 
     #content > .statement {
-      border: 1px solid lightgray;
-      background-color: rgb(250, 250, 250);
-      border-radius: 5px;
+      border: 3px solid black;
+      border-radius: 10px;
       margin-bottom: 10px;
       padding: 10px;
-      transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
-    }
-    #content > .statement:hover {
-      background-color: white;
-      box-shadow: -4px 5px 8px 1px rgba(0,0,0,0.2);
-      transform: translate(3px, -2px) scale(1.01, 1.01);
     }
     #content > .statement > p {
       padding: 2px;
     }
-    #content > .statement > * {
-      margin-bottom: 5px;
-    }
     #content > .statement > .original {
-      /*background-color: pink;*/
+      background-color: pink;
       direction: rtl;
       font-size: 20px;
-      font-family: 'Google Sans Text';
-      font-weight: 100;
-      color: red;
     }
     #content > .statement > .transcription {
-      /*background-color: cyan;*/
-      color:  darkgreen;
-      font-family: 'Open Sans';
+      background-color: cyan;
+      font-family: mono;
     }
     #content > .statement > .translation {
-      /*background-color: lightgreen;*/
+      background-color: lightgreen;
       font-style: italic;
-      color: rgba(0, 0, 0, 0.7);
-    }
-    #content > .statement > h3 {
-      text-align: center;
-      padding: 0 0 10px;
     }
 
     #content.no-translation > .statement > .translation,
     #content.no-transcription > .statement > .transcription,
-    #content.no-original > .statement > .original,
-    #content.no-header > .statement > h3 {
+    #content.no-original > .statement > .original {
       display: none;
-    }
-    #statement-controls {
-      user-select: none;
-    }
-    #statement-controls > label {
-      margin: 0 3px;
-    }
-    #statement-controls > label > span {
-      color: lightgray;
-      font-weight: bold;
-      font-size: 20px;
-      padding: 3px 5px;
-      box-sizing: content-box;
-      border-radius: 5px;
-      border: 1px solid lightgray;
-    }
-    #statement-controls > label > input {
-      display: none;
-    }
-    #statement-controls > label > input:checked + span  {
-      color: white;
-      border-color: white;
-      box-shadow:
-          0 0 1px blue,
-          0 0 3px cyan,
-          inset 0 0 1px white;
-      text-shadow:
-          0 0 1px blue,
-          0 0 2px blue,
-          0 0 3px cyan,
-          0 0 5px cyan;
     }
   </style>
 
 </head>
 <body>
 
-  <header>
-    <div id="control-panel">
-      <form id="statement-controls">
-        <label title="Headers">
-          <input type="checkbox" name="header" checked>
-          <span>h</span>
-        </label>
-        <label title="Original text">
-          <input type="checkbox" name="original" checked>
-          <span>آر</span>
-        </label>
-        <label title="Transcription">
-          <input type="checkbox" name="transcription" checked>
-          <span>[á'<sup>ј</sup>]</span>
-        </label>
-        <label title="Translation">
-          <input type="checkbox" name="translation" checked>
-          <span>tr</span>
-        </label>
-      </form>
-    </div>
-  </header>
+  <div id="control-panel">
+    <form id="statement-controls">
+      <input type="checkbox" name="original">
+      <input type="checkbox" name="transcription">
+      <input type="checkbox" name="translation">
+    </form>
+  </div>
 
   <div id="content" class="">
     <div class="statement">
-      <h3>Такбир</h3>
       <p class="original">
         الله أكبر
       </p>
@@ -168,29 +81,14 @@
     </div>
 
     <div class="statement">
-      <h3>Истиаза</h3>
       <p class="original">
-        أعوذ بالله السميع العليم من الشيطان الرجيم
-      </p>
-      <p class="transcription">
-        а‘узу би-ллахи мин аш-шайтани-р-раджим
-      </p>
-      <p class="translation">
-        Я прибегаю к Аллаху, слышащему, знающему, за помощью от шайтана, побиваемого камнями
-      </p>
-    </div>
-
-    <div class="statement">
-      <h3>Фатиха суросу</h3>
-      <p class="original">
-
-        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
-        الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ<br>
-        الرَّحْمَٰنِ الرَّحِيمِ<br>
-        مَالِكِ يَوْمِ الدِّينِ<br>
-        إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ<br>
-        اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ<br>
-        صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ<br>
+        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ
+        الرَّحْمَٰنِ الرَّحِيمِ
+        مَالِكِ يَوْمِ الدِّينِ
+        إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ
+        اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ
+        صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ
       </p>
       <p class="transcription">
         Бисмилляяhи-р-Рахмаани-р-Рахиим
@@ -217,31 +115,6 @@
         (Ал жол) Сенин каарыңа калбагандар жана адашпагандарга Өзүң тартуулаган жол.
       </p>
     </div>
-
-
-    <div class="statement">
-      <h3>Ихлас суросу</h3>
-      <p class="original">
-
-    قُلْ هُوَ اللَّهُ أَحَدٌ
-    اللَّهُ الصَّمَدُ
-    لَمْ يَلِدْ وَلَمْ يُولَدْ
-    وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ
-      </p>
-      <p class="transcription">
-        Бисмилляхир-Рахманир-Рахиим
-        Куль хуАллааху Ахад
-        Аллаахус-Самад
-        Лям ялид уа лям юляд
-        Уа лям якулляху куфууан Ахад
-      </p>
-      <p class="translation">
-    Айткын: Аллах Жалгыз!
-    Аллах эч кимге муктаж эмес!
-    (Ал) төрөбөгөн жана төрөлбөгөн.
-    Ага эч ким теңдеш эмес.
-      </p>
-    </div>
   </div>
 
 
@@ -251,64 +124,29 @@
     const contentBlock = document.querySelector('#content');
 
     statementViewConstrolsForm.addEventListener('change', function (e) {
-      if (e.target.checked) {
-        contentBlock.classList.remove(`no-${e.target.name}`);
-      } else {
-        contentBlock.classList.add(`no-${e.target.name}`);
+      if (e.target.name === 'original') {
+        if (e.target.checked) {
+          contentBlock.classList.remove('no-original');
+        } else {
+          contentBlock.classList.add('no-original');
+        }
+      }
+      if (e.target.name === 'transcription') {
+        if (e.target.checked) {
+          contentBlock.classList.remove('no-transcription');
+        } else {
+          contentBlock.classList.add('no-transcription');
+        }
+      }
+      if (e.target.name === 'translation') {
+        if (e.target.checked) {
+          contentBlock.classList.remove('no-translation');
+        } else {
+          contentBlock.classList.add('no-translation');
+        }
       }
     })
 
-  </script>
-
-  <style>
-    #content > .statement > .original > span.non-char {
-      color: blue;
-    }
-  </style>
-  <script type="text/javascript">
-    const CHAR_VALUES = new Map([
-      ['ا', 1], ['أ', 1], ['إ', 1],
-      ['ب', 2],
-      ['ج', 3],
-      ['د', 4],
-      ['ه', 5],
-      ['و', 6],
-      ['ز', 7],
-      ['ح', 8],
-      ['ط', 9],
-      ['ي', 10], ["ی", 10], ["ى", 10],
-      ['ك', 20],
-      ['ل', 30],
-      ['م', 40],
-      ['ن', 50],
-      ['س', 60],
-      ['ع', 70],
-      ['ف', 80],
-      ['ص', 90],
-      ['ق', 100],
-      ['ر', 200],
-      ['ش', 300],
-      ['ت', 400], ['ة', 400],
-      ['ث', 500],
-      ['خ', 600],
-      ['ذ', 700],
-      ['ض', 800],
-      ['ظ', 900],
-      ['غ', 1000],
-    ]);
-
-    Array.from(document.querySelectorAll('.statement > .original')).forEach(el => {
-      const newInner = Array.from(el.innerText).map(ch => {
-        const span = document.createElement('span');
-        span.innerText = ch;
-        if (!CHAR_VALUES.has(ch)) {
-          span.classList.add('non-char');
-        }
-        return span;
-      });
-      el.innerHTML = '';
-      el.append(...newInner);
-    });
   </script>
 
 
