@@ -92,7 +92,7 @@
       }
     });
 
-    fetch('https://kekmek.tk/data.json').then(r => r.json()).then(statements => {
+    fetch('./data.json').then(r => r.json()).then(statements => {
       console.log('kek', statements);
 
       for (let i = 0; i < statements.length; i++) {
