@@ -191,12 +191,14 @@
           const arAyatsListEl = document.createElement('ol');
           for (let k = 0; k < statement.original.length; k++) {
             const li = document.createElement('li');
-            li.innerText = statement.original[k];
+            // li.innerText = statement.original[k];
+            hackSetArabicText(li, statement.original[k])
             arAyatsListEl.appendChild(li);
           }
           arTextEl.appendChild(arAyatsListEl);
         } else {
-          arTextEl.innerText = statement.original;
+          hackSetArabicText(arTextEl, statement.original);
+          // arTextEl.innerText = statement.original;
         }
 
         const tcTextEl = document.createElement('p');
@@ -214,8 +216,6 @@
         contentBlock.appendChild(stEl);
       }
 
-      hackPaintArabicText();
-
     });
 
   </script>
@@ -223,6 +223,9 @@
   <style>
     #content > .statement > .original .non-char {
       color: blue;
+    }
+    #content > .statement > .original .kek {
+      color: green;
     }
   </style>
   <script type="text/javascript">
@@ -257,20 +260,20 @@
       ['غ', 1000],
     ]);
 
-    function hackPaintArabicText() {
-      Array.from(document.querySelectorAll('.statement > p.original, .statement > .original > ol > li')).forEach(el => {
-        console.log(el);
-        const newInner = Array.from(el.innerText).map(ch => {
-          const span = document.createElement('span');
-          span.innerText = ch;
-          if (!CHAR_VALUES.has(ch)) {
-            span.classList.add('non-char');
-          }
-          return span;
-        });
-        el.innerHTML = '';
-        el.append(...newInner);
+    function hackSetArabicText(el, text) {
+      // el.innerText = text;
+      const newInner = Array.from(text).map((ch, i) => {
+        const span = document.createElement('span');
+        span.innerText = ch;
+        if (i%3 === 0) {
+          span.classList.add('kek');
+        }
+        if (!CHAR_VALUES.has(ch)) {
+          span.classList.add('non-char');
+        }
+        return span;
       });
+      el.append(...newInner);
     }
   </script>
 
