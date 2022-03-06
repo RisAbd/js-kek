@@ -73,7 +73,7 @@
       font-weight: 100;
       color: red;
     }
-    #content > .statement > .original > ol {
+    #content > .statement > ol.original {
       list-style-position: inside;
     }
     #content > .statement > .transcription {
@@ -115,13 +115,15 @@
     #statement-controls > label > input {
       display: none;
     }
-    #statement-controls > label > input:checked + span  {
-      color: white;
-      border-color: white;
+    #statement-controls > label:hover > span {
       box-shadow:
           0 0 1px blue,
           0 0 3px cyan,
-          inset 0 0 1px white;
+          inset 0 0 1px cyan;
+    }
+    #statement-controls > label > input:checked + span  {
+      color: white;
+      border-color: white;
       text-shadow:
           0 0 1px blue,
           0 0 2px blue,
@@ -185,21 +187,21 @@
         stHead.innerText = statement.header;
         stEl.appendChild(stHead);
 
-        const arTextEl = document.createElement('p');
-        arTextEl.classList.add('original');
+        let arTextEl;
         if (statement.original instanceof Array) {
-          const arAyatsListEl = document.createElement('ol');
+          arTextEl = document.createElement('ol');
           for (let k = 0; k < statement.original.length; k++) {
             const li = document.createElement('li');
-            // li.innerText = statement.original[k];
-            hackSetArabicText(li, statement.original[k])
-            arAyatsListEl.appendChild(li);
+            li.innerText = statement.original[k];
+            // hackSetArabicText(li, statement.original[k])
+            arTextEl.appendChild(li);
           }
-          arTextEl.appendChild(arAyatsListEl);
         } else {
-          hackSetArabicText(arTextEl, statement.original);
-          // arTextEl.innerText = statement.original;
+          arTextEl = document.createElement('p');
+          // hackSetArabicText(arTextEl, statement.original);
+          arTextEl.innerText = statement.original;
         }
+        arTextEl.classList.add('original');
 
         const tcTextEl = document.createElement('p');
         tcTextEl.classList.add('transcription');
@@ -215,6 +217,8 @@
 
         contentBlock.appendChild(stEl);
       }
+
+      hackArabicTexts();
 
     });
 
@@ -260,20 +264,39 @@
       ['غ', 1000],
     ]);
 
-    function hackSetArabicText(el, text) {
-      // el.innerText = text;
-      const newInner = Array.from(text).map((ch, i) => {
-        const span = document.createElement('span');
-        span.innerText = ch;
-        if (i%3 === 0) {
-          span.classList.add('kek');
-        }
-        if (!CHAR_VALUES.has(ch)) {
-          span.classList.add('non-char');
-        }
-        return span;
-      });
-      el.append(...newInner);
+    // function hackSetArabicText(el, text) {
+    //   // el.innerText = text;
+    //   const newInner = Array.from(text).map((ch, i) => {
+    //     const span = document.createElement('span');
+    //     span.innerText = ch;
+    //     if (i%3 === 0) {
+    //       span.classList.add('kek');
+    //     }
+    //     if (!CHAR_VALUES.has(ch)) {
+    //       span.classList.add('non-char');
+    //     }
+    //     return span;
+    //   });
+    //   el.append(...newInner);
+    // }
+
+    function hackArabicTexts(inElem = document) {
+      Array.from(inElem.querySelectorAll('.statement > p.original, .statement > ol.original > li')).forEach(el => {
+
+        const newInner = Array.from(el.innerText).map((ch, i) => {
+          const span = document.createElement('span');
+          span.innerText = ch;
+          if (i%3 === 0) {
+            span.classList.add('kek');
+          }
+          if (!CHAR_VALUES.has(ch)) {
+            span.classList.add('non-char');
+          }
+          return span;
+        });
+        el.innerHTML = '';
+        el.append(...newInner);
+      })
     }
   </script>
 
