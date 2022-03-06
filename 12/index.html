@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css?family=Roboto');
+    @import url('https://fonts.googleapis.com/css?family=Roboto Mono');
+
+    body {
+      font-family: Roboto;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #control-panel {
+      padding: 8px;
+      display: flex;
+      justify-content: end;
+    }
+    #control-panel > #statement-controls {
+      /*background-color: lightgreen;*/
+      border: 1px solid black;
+      display: inline-block;
+    }
+    #control-panel > #statement-controls::after {
+      content: '⚙️';
+      font-size: 32px;
+      display: inline-block;
+      transition: transform 0.1s linear;
+    }
+    #control-panel > #statement-controls:hover::after {
+      transform: rotateZ(90deg);
+    }
+    #control-panel > #statement-controls > label {
+      display: none;
+    }
+    #control-panel > #statement-controls:hover > label {
+      display: inline-block;
+    }
+    #content {
+      background-color: lightblue;
+      padding: 5px;
+    }
+
+    #content > .section-header {
+      color: darkblue;
+      text-align: center;
+    }
+    #content > h3.section-header {
+      color: darkgreen;
+      text-align: center;
+    }
+
+    #content > .statement {
+      border: 1px solid black;
+      margin-bottom: 10px;
+      padding: 8px;
+    }
+    #content > .statement > img {
+      width: 100%;
+    }
+    #content > .statement > p,
+    #content > .statement > ol {
+      padding: 2px;
+    }
+    #content > .statement > .original {
+      direction: rtl;
+      font-size: 20px;
+    }
+    #content > .statement > ol.original {
+      list-style-type: arabic-indic;
+    }
+    #content > .statement > ol {
+      list-style-position: inside;
+    }
+    #content > .statement > .transcription {
+      font-family: 'Roboto Mono';
+    }
+    #content > .statement > .translation {
+      font-style: italic;
+    }
+    #content > .statement > h4 {
+      /*text-align: center;*/
+    }
+    #content > .statement > .comment {
+      color: gray;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    #content > .statement > .comment::before {
+      content: '/* ';
+    }
+    #content > .statement > .comment::after {
+      content: ' */';
+    }
+
+    #content.no-translation > .statement > .translation,
+    #content.no-transcription > .statement > .transcription,
+    #content.no-original > .statement > .original,
+    #content.no-header > .statement > h4,
+    #content.no-comment > .statement > .comment,
+    #content.no-section-header > .section-header {
+      display: none;
+    }
+
+
+
+
+    /* DEBUG STYLES */
+
+    body.debug #control-panel {
+      background-color: yellow;
+    }
+
+    body.debug .statement > .original {
+      background-color: pink;
+    }
+    body.debug .statement > .transcription {
+      background-color: cyan;
+    }
+    body.debug .statement > .translation {
+      background-color: lightgreen;
+    }
+
+
+
+
+  </style>
+
+</head>
+<body class="debug">
+  <div id="control-panel">
+    <form id="statement-controls">
+      <label>h: <input checked type="checkbox" name="header"></label>
+      <label>ar: <input checked type="checkbox" name="original"></label>
+      <label>tr: <input checked type="checkbox" name="translation"></label>
+      <label>tc: <input checked type="checkbox" name="transcription"></label>
+      <label>cm: <input checked type="checkbox" name="comment"></label>
+      <label>sh: <input checked type="checkbox" name="section-header"></label>
+    </form>
+  </div>
+
+  <div id="content"></div>
+
+  <script type="text/javascript">
+
+
+    const statementViewConstrolsForm = document.querySelector('#statement-controls');
+
+    console.log(statementViewConstrolsForm);
+
+    const contentBlock = document.querySelector('#content');
+
+    statementViewConstrolsForm.addEventListener('change', function (e) {
+      if (e.target.checked) {
+        contentBlock.classList.remove('no-'+e.target.name);
+      } else {
+        contentBlock.classList.add('no-'+e.target.name);
+      }
+    });
+
+    // { <div.statement><h3>"Takbir"</h3></div> }
+
+    function createStatementEl(data, cls) {
+      let stPartEl;
+      if (data instanceof Array) {
+        stPartEl = document.createElement('ol');
+        for (let k = 0; k < data.length; k++) {
+          const li = document.createElement('li');
+          li.innerText = data[k];
+          stPartEl.appendChild(li);
+        }
+      } else if (data.startsWith('http://') || data.startsWith('https://')) {
+        stPartEl = document.createElement('img');
+        stPartEl.src = data;
+      } else {
+        stPartEl = document.createElement('p');
+        stPartEl.innerText = data;
+      }
+      stPartEl.classList.add(cls);
+      return stPartEl;
+    }
+
+    fetch('./data.json').then(r => r.json()).then(statements => {
+      console.log('kek', statements);
+
+      for (let i = 0; i < statements.length; i++) {
+        const statement = statements[i];
+        console.log(statement);
+
+        if (statement.type === 'section-header') {
+          const secHeaderEl = document.createElement('h'+statement.level);
+          secHeaderEl.classList.add('section-header');
+          secHeaderEl.innerText = `- ${statement.header} -`;
+
+          contentBlock.appendChild(secHeaderEl);
+
+        } else {
+
+          const stEl = document.createElement('div');
+          stEl.classList.add('statement');
+
+          if (statement.header) {
+            const stHead = document.createElement('h4');
+            stHead.innerText = statement.header;
+            stEl.appendChild(stHead);
+          }
+
+          if (statement.comment) {
+            const stComment = document.createElement('p');
+            stComment.classList.add('comment');
+            stComment.innerText = statement.comment;
+            stEl.appendChild(stComment);
+          }
+
+          if (statement.original) {
+            const arTextEl = createStatementEl(statement.original, 'original');
+            stEl.appendChild(arTextEl);
+          }
+
+          if (statement.transcription) {
+            const tcTextEl = createStatementEl(statement.transcription, 'transcription');
+            stEl.appendChild(tcTextEl);
+          }
+
+          if (statement.translation) {
+            const trTextEl = createStatementEl(statement.translation, 'translation');
+            stEl.appendChild(trTextEl);
+          }
+
+          contentBlock.appendChild(stEl);
+        }
+      }
+
+    });
+
+  </script>
+
+
+</body>
+</html>
